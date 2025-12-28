@@ -22,7 +22,6 @@ function App() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [projectId] = useState('e9933f85-5b08-4f08-ad98-4f8213d26eae')
   const [loading, setLoading] = useState(false)
-  const [response, setResponse] = useState<any>(null)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [userId, setUserId] = useState('')
@@ -44,7 +43,6 @@ function App() {
     setLoading(true)
     setError(null)
     setSuccess(false)
-    setResponse(null)
 
     try {
       const innerworks = new InnerworksMetrics({
@@ -54,8 +52,7 @@ function App() {
         silentLogs: false
       })
 
-      const result = await innerworks.sendMetrics(userId)
-      setResponse(result)
+      await innerworks.sendMetrics(userId)
       setSuccess(true)
 
       // Auto-refresh after 3 seconds
