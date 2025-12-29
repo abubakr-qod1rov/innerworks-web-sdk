@@ -72,10 +72,10 @@ function App() {
 
       setSuccess(true)
 
-      // Auto-refresh after 3 seconds
+      // Auto-refresh after 1 second
       setTimeout(() => {
         window.location.reload()
-      }, 3000)
+      }, 1000)
     } catch (err: any) {
       console.error('Error sending metrics:', err)
       setError(err.message || err.toString() || 'Metrikalarni yuborishda xatolik')
@@ -195,7 +195,7 @@ function App() {
 
         {success && (
           <div className="alert alert-success">
-            <strong>Muvaffaqiyatli!</strong> Metrikalar yuborildi. Sahifa 3 sekunddan keyin yangilanadi...
+            <strong>Muvaffaqiyatli!</strong> Metrikalar yuborildi. Sahifa 1 sekunddan keyin yangilanadi...
           </div>
         )}
 
