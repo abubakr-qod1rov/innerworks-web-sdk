@@ -17,8 +17,12 @@ const browsers = [
 function App() {
   const [email] = useState('abubakr.hbai@gmail.com')
   const [name] = useState('Abubakr')
-  const [deviceName, setDeviceName] = useState('')
-  const [browserName, setBrowserName] = useState('')
+  const [deviceName, setDeviceName] = useState(() => {
+    return localStorage.getItem('deviceName') || ''
+  })
+  const [browserName, setBrowserName] = useState(() => {
+    return localStorage.getItem('browserName') || ''
+  })
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [projectId] = useState('e9933f85-5b08-4f08-ad98-4f8213d26eae')
   const [loading, setLoading] = useState(false)
@@ -33,6 +37,14 @@ function App() {
       setUserId(constructedUserId)
     }
   }, [email, name, deviceName, browserName])
+
+  useEffect(() => {
+    localStorage.setItem('deviceName', deviceName)
+  }, [deviceName])
+
+  useEffect(() => {
+    localStorage.setItem('browserName', browserName)
+  }, [browserName])
 
   const handleSendMetrics = async () => {
     if (!deviceName.trim() || !browserName.trim()) {
@@ -53,6 +65,11 @@ function App() {
       })
 
       await innerworks.sendMetrics(userId)
+
+      // Save to localStorage
+      localStorage.setItem('deviceName', deviceName)
+      localStorage.setItem('browserName', browserName)
+
       setSuccess(true)
 
       // Auto-refresh after 3 seconds
@@ -86,6 +103,7 @@ function App() {
 
   const handleBrowserSelect = (browser: string) => {
     setBrowserName(browser)
+    localStorage.setItem('browserName', browser)
     setIsDropdownOpen(false)
   }
 
